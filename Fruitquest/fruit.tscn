@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bo4rm1mw468rk"]
+
+[ext_resource type="Script" path="res://fruit.gd" id="1_5mg1g"]
+[ext_resource type="Texture2D" uid="uid://meyjmnkgm4gk" path="res://icon.svg" id="2_hs6mi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vh60u"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_335cc"]
+size = Vector2(8, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fje33"]
+size = Vector2(64, 6)
+
+[node name="Fruit" type="RigidBody2D"]
+lock_rotation = true
+script = ExtResource("1_5mg1g")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_hs6mi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_vh60u")
+
+[node name="Sides" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sides"]
+position = Vector2(-31, 0)
+shape = SubResource("RectangleShape2D_335cc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sides"]
+position = Vector2(31, 0)
+shape = SubResource("RectangleShape2D_335cc")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -33)
+shape = SubResource("RectangleShape2D_fje33")
+
+[connection signal="body_entered" from="Sides" to="." method="_on_sides_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
